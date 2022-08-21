@@ -9,18 +9,34 @@ import (
 
 var setupCmd = &cobra.Command{
 	Use:   "setup",
-	Short: "Initialize file for defman",
+	Short: "Setup config file for defman",
 	Run: func(cmd *cobra.Command, args []string) {
 		homedir := os.Getenv("HOME")
-		filename := homedir + "/.config/defman/config.toml"
-		resp, err := os.Stat(filename)
+		dirname := homedir + "/.config/defman/"
+		filename := "config.yaml"
+		resp, _ := os.Stat(dirname + filename)
 		if resp != nil {
-			fmt.Println(filename + " is already exists")
+			fmt.Println(dirname + filename + " is already exists👌")
+			return
 		}
-		if err != nil {
-			fmt.Println(filename)
-		}
+		
+		makeconfig(dirname, filename)
 	},
+}
+
+func makeconfig(dirname, filename string) {
+	if err := os.MkdirAll(dirname, 0755); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	_, err := os.Create(dirname + filename)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(dirname + filename + " was created😃")
+	return
 }
 
 func init() {
