@@ -16,15 +16,14 @@ var readCmd = &cobra.Command{
 	Use:   "read",
 	Short: "Print defaults settings",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("read called")
+		fmt.Println("Run: read command")
+		out, _ := exec.Command("ls", "-la").Output()
+		fmt.Printf("result: \n%s", out)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(readCmd)
-	fmt.Println("Run: write command")
-	out, _ := exec.Command("ls", "-la").Output()
-	fmt.Printf("result: \n%s", out)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
