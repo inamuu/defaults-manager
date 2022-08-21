@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -26,15 +27,16 @@ var setupCmd = &cobra.Command{
 
 func makeconfig(dirname, filename string) {
 	if err := os.MkdirAll(dirname, 0755); err != nil {
-		fmt.Println(err)
-		return
+		panic(err.Error())
 	}
 
 	_, err := os.Create(dirname + filename)
 	if err != nil {
-		fmt.Println(err)
-		return
+		panic(err.Error())
 	}
+
+	multi_line := []byte("- NSGlobalDomain\n" + "  Key: KeyRepeat\n" + "  Type: int\n" + "  Value: 1\n")
+	ioutil.WriteFile(dirname + filename, multi_line, 0755)
 	fmt.Println(dirname + filename + " was created😃")
 	return
 }
