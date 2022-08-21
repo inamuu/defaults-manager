@@ -35,7 +35,11 @@ func makeconfig(dirname, filename string) {
 		panic(err.Error())
 	}
 
-	multi_line := []byte("- NSGlobalDomain\n" + "  Key: KeyRepeat\n" + "  Type: int\n" + "  Value: 1\n")
+	multi_line := []byte("---\n" + 
+		"- Domain: NSGlobalDomain\n" + 
+		"  Key: KeyRepeat\n" + 
+		"  Type: int\n" + 
+		"  Value: 1\n")
 	ioutil.WriteFile(dirname + filename, multi_line, 0755)
 	fmt.Println(dirname + filename + " was created😃")
 	return
